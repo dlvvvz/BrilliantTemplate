@@ -1,2 +1,3 @@
 pub mod response;
-mod auth;
+pub mod auth;
+pub mod fallback;
