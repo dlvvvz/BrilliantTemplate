@@ -21,4 +21,4 @@
 - [ ] Make an auth
 - [ ] Make a database
 - [ ] Make a client
-- [ ] Make a app
+- [ ] Make an app
