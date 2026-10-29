@@ -18,8 +18,6 @@
 
 ## ToDo:
 
-- [ ] Make a readme
-- [ ] Make a license
 - [ ] Make an auth
 - [ ] Make a database
 - [ ] Make a client
