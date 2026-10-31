@@ -1,17 +1,22 @@
 mod core;
+mod routes;
 
 use crate::core::response::*;
-use crate::core::fallback::configure;
-use actix_web::{web::{Data,self}, Responder, App as HttpApp, HttpServer, App, get};
+use crate::core::fallback;
+use actix_web::{web::{Data,self}, Responder, App as HttpApp, HttpServer, get};
 
+struct App {
 
+}
 
 #[tokio::main]
 async fn main() {
     HttpServer::new(|| {
-        App::new()
+        HttpApp::new()
             .service(index)
-            .configure(configure)
+            .configure(fallback::config)
+            .configure(routes::config)
+            .app_data(Data::new(App {}))
     })
         .bind("127.0.0.1:8080").unwrap().run().await.unwrap();
 }

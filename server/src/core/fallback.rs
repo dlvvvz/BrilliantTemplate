@@ -44,7 +44,7 @@ pub fn path_error(_err: PathError, _req: &HttpRequest) -> actix_web::Error {
 }
 
 // Configure
-pub fn configure(cfg: &mut web::ServiceConfig) {
+pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.app_data(web::JsonConfig::default().error_handler(json_error))
         .app_data(web::FormConfig::default().error_handler(form_error))
         .app_data(web::QueryConfig::default().error_handler(query_error))

@@ -4,7 +4,7 @@ pub mod code;
 use actix_web::http::StatusCode;
 use actix_web::{HttpRequest, HttpResponse};
 use serde::Serialize;
-use serde_json::{Map, Value, to_value};
+use serde_json::{Map, Value, to_value, json};
 
 
 #[derive(Serialize, Clone, Debug)]
@@ -20,7 +20,7 @@ impl Response {
     pub fn new(
         code: impl code::Code
     ) -> Self {
-        let parsed_code = to_value(&code).unwrap_or_else(|_| Value::String("err_Internal".to_string()));
+        let parsed_code = to_value(&code).unwrap_or_else(|_| Value::String(code::INTERNAL_ERROR.to_string()));
         Self {
             code: parsed_code,
             data: Value::Object(Map::new()),
@@ -28,7 +28,14 @@ impl Response {
         }
     }
     pub fn data(mut self, data: impl data::DataTemplate) -> Self {
-        self.data = to_value(data).unwrap_or_else(|_| Value::Object(Map::new()));
+        self.data = match to_value(data) {
+            Ok(data) => data,
+            Err(_) => {
+                self.status = StatusCode::INTERNAL_SERVER_ERROR;
+                self.code = Value::String(code::INTERNAL_ERROR.to_string());
+                Value::Object(Map::new())
+            },
+        };
         self
     }
     pub fn build(self) -> HttpResponse {
