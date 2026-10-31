@@ -22,3 +22,4 @@
 - [ ] Make a database
 - [ ] Make a client
 - [ ] Make an app
+- [ ] Make a CDN 
