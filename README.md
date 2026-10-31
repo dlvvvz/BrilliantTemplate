@@ -7,11 +7,13 @@
 
 ### Client
 - Client: **svelte**
+- Script: **typescript**
 - Css: **tailwind**
 - UI: **custom**
 
 ### App
 - App: **tauri** with **svelte**
+- Script: **typescript**
 - Css: **tailwind**
 - UI: **custom**
 
