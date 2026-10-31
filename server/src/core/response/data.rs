@@ -1,8 +1,7 @@
 use serde::Serialize;
 
+
 #[allow(unused)]
-
-
 pub trait DataTemplate: Serialize {
 
 }

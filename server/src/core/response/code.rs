@@ -2,10 +2,8 @@ use actix_web::http::StatusCode;
 use serde::Serialize;
 
 
-
 pub const INTERNAL_ERROR: &str = "err_Internal";
 
-#[allow(unused)]
 pub trait Code: Serialize {
     fn status(&self) -> StatusCode;
 }
