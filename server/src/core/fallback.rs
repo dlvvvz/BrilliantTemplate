@@ -6,36 +6,41 @@ pub async fn default() -> impl Responder {
     Response::new(code::Common::NotFound)
 }
 
+fn reject(resp: Response) -> actix_web::Error {
+    actix_web::error::InternalError::from_response("", resp.build()).into()
+}
+
 // Json error
-pub fn json_error(_err: JsonPayloadError, _req: &HttpRequest) -> actix_web::Error {
-    actix_web::error::InternalError::from_response(
-        "",
-        Response::new(code::Validation::InvalidBody).build(),
-    ).into()
+pub fn json_error(err: JsonPayloadError, _req: &HttpRequest) -> actix_web::Error {
+    let code = match err {
+        JsonPayloadError::OverflowKnownLength { .. } | JsonPayloadError::Overflow { .. } => {
+            code::Validation::PayloadTooLarge
+        }
+        JsonPayloadError::ContentType => code::Validation::UnsupportedMediaType,
+        JsonPayloadError::Deserialize(e) if e.is_data() => code::Validation::InvalidFormat,
+        _ => code::Validation::InvalidBody,
+    };
+    reject(Response::new(code))
 }
 
 // Form error
-pub fn form_error(_err: UrlencodedError, _req: &HttpRequest) -> actix_web::Error {
-    actix_web::error::InternalError::from_response(
-        "",
-        Response::new(code::Validation::InvalidBody).build(),
-    ).into()
+pub fn form_error(err: UrlencodedError, _req: &HttpRequest) -> actix_web::Error {
+    let code = match err {
+        UrlencodedError::Overflow { .. } => code::Validation::PayloadTooLarge,
+        UrlencodedError::ContentType => code::Validation::UnsupportedMediaType,
+        _ => code::Validation::InvalidBody,
+    };
+    reject(Response::new(code))
 }
 
 // Query error
 pub fn query_error(_err: QueryPayloadError, _req: &HttpRequest) -> actix_web::Error {
-    actix_web::error::InternalError::from_response(
-        "",
-        Response::new(code::Validation::InvalidFormat).build(),
-    ).into()
+    reject(Response::new(code::Validation::InvalidFormat))
 }
 
 // Path error
 pub fn path_error(_err: PathError, _req: &HttpRequest) -> actix_web::Error {
-    actix_web::error::InternalError::from_response(
-        "",
-        Response::new(code::Validation::InvalidFormat).build(),
-    ).into()
+    reject(Response::new(code::Validation::InvalidFormat))
 }
 
 // Configure

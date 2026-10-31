@@ -70,6 +70,8 @@ pub enum Validation {
     InvalidFormat,
     #[serde(rename = "err_PayloadTooLarge")]
     PayloadTooLarge,
+    #[serde(rename = "err_UnsupportedMediaType")]
+    UnsupportedMediaType,
 }
 
 impl Code for Validation {
@@ -79,6 +81,7 @@ impl Code for Validation {
             | Validation::MissingField
             | Validation::InvalidFormat => StatusCode::BAD_REQUEST,
             Validation::PayloadTooLarge => StatusCode::PAYLOAD_TOO_LARGE,
+            Validation::UnsupportedMediaType => StatusCode::UNSUPPORTED_MEDIA_TYPE,
         }
     }
 }
