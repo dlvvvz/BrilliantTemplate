@@ -4,7 +4,7 @@ pub mod code;
 use actix_web::http::StatusCode;
 use actix_web::{HttpRequest, HttpResponse};
 use serde::Serialize;
-use serde_json::{Map, Value, to_value, json};
+use serde_json::{Map, Value, to_value};
 
 
 #[derive(Serialize, Clone, Debug)]
@@ -27,6 +27,7 @@ impl Response {
             status: code.status()
         }
     }
+    #[allow(unused)]
     pub fn data(mut self, data: impl data::DataTemplate) -> Self {
         self.data = match to_value(data) {
             Ok(data) => data,

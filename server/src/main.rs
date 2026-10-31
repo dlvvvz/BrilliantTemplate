@@ -3,7 +3,7 @@ mod routes;
 
 use crate::core::response::*;
 use crate::core::fallback;
-use actix_web::{web::{Data,self}, Responder, App as HttpApp, HttpServer, get};
+use actix_web::{web::{Data}, Responder, App as HttpApp, HttpServer, get};
 
 struct App {
 

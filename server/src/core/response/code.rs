@@ -2,13 +2,16 @@ use actix_web::http::StatusCode;
 use serde::Serialize;
 
 
+
 pub const INTERNAL_ERROR: &str = "err_Internal";
 
+#[allow(unused)]
 pub trait Code: Serialize {
     fn status(&self) -> StatusCode;
 }
 
 /// Common
+#[allow(unused)]
 #[derive(Serialize, Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Common {
     #[serde(rename = "ok_Ok")]
@@ -36,6 +39,7 @@ impl Code for Common {
 }
 
 /// Authorization and Authentication
+#[allow(unused)]
 #[derive(Serialize, Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Auth {
     #[serde(rename = "err_TokenMissing")]
@@ -63,6 +67,7 @@ impl Code for Auth {
 }
 
 /// Validation
+#[allow(unused)]
 #[derive(Serialize, Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Validation {
     #[serde(rename = "err_InvalidBody")]
@@ -90,6 +95,7 @@ impl Code for Validation {
 }
 
 /// Users
+#[allow(unused)]
 #[derive(Serialize, Clone, Copy, Debug, PartialEq, Eq)]
 pub enum User {
     #[serde(rename = "err_UserNotFound")]
