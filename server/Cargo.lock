@@ -1670,6 +1670,7 @@ version = "0.1.0"
 dependencies = [
  "actix-web",
  "chrono",
+ "dotenvy",
  "jsonwebtoken",
  "serde",
  "serde_json",
